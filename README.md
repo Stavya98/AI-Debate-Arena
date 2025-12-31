@@ -59,6 +59,10 @@ uvicorn main:app --reload
 open:
 http://localhost:8000
 
+
+
+
+
 🔒 Authentication Flow
 
 Google login via Firebase (frontend)
@@ -78,16 +82,3 @@ PDF export of debates
 Debate analytics (winner analysis)
 
 Deployment on Render / Railway
-
-
----
-
-## 🧠 5️⃣ INITIALIZE GIT & PUSH
-
-From project root:
-
-```bash
-git init
-git add .
-git commit -m "Initial commit: AI Debate Arena"
-
