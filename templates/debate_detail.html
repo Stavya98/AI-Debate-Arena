@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}
+Debate Detail
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container debate-page">
+   <header class="debate-header">
+    <h1 class="debate-title">
+      {{ debate.topic }}
+    </h1>
+  </header> 
+  <p>{{ debate.clarified_topic }}</p>
+  <p class="subtitle">
+    Created on {{ debate.created_at.strftime("%b %d, %Y") }}
+  </p>
+
+  <div class="arena">
+    <div class="card for">
+      <h2>✅ FOR</h2>
+
+      <div class="argument">
+        <div class="section-title">Opening</div>
+        <p>{{ debate.for_opening }}</p>
+      </div>
+
+      <div class="argument">
+        <div class="section-title">Rebuttal</div>
+        <p>{{ debate.for_rebuttal }}</p>
+      </div>
+    </div>
+
+    <div class="card against">
+      <h2>❌ AGAINST</h2>
+
+      <div class="argument">
+        <div class="section-title">Opening</div>
+        <p>{{ debate.against_opening }}</p>
+      </div>
+
+      <div class="argument">
+        <div class="section-title">Rebuttal</div>
+        <p>{{ debate.against_rebuttal }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card summary">
+    <h2>🧠 Neutral Summary</h2>
+    <p>{{ debate.summary }}</p>
+  </div>
+
+</div>
+
+</body>
+</html>
+{% endblock %}

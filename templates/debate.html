@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ debate.topic }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+{% include "navbar.html" %}
+
+<div class="container">
+
+  <h1>{{ debate.clarified_topic }}</h1>
+
+  <div class="arena">
+    <div class="card for">
+      <h2>FOR</h2>
+      <p>{{ debate.for_opening }}</p>
+      <p>{{ debate.for_rebuttal }}</p>
+    </div>
+
+    <div class="card against">
+      <h2>AGAINST</h2>
+      <p>{{ debate.against_opening }}</p>
+      <p>{{ debate.against_rebuttal }}</p>
+    </div>
+  </div>
+
+  <div class="card summary">
+    <h2>Neutral Summary</h2>
+    <p>{{ debate.summary }}</p>
+  </div>
+
+</div>
+
+</body>
+</html>

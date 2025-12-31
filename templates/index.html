@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Debate Arena</title>
+  <link rel="stylesheet" href="/static/style.css" />
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+</head>
+
+
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="/" class="logo">⚖️ AI Debate Arena</a>
+  </div>
+  <div class="nav-right">
+    <a href="/">Home</a>
+    <a href="/history" id="historyLink">History</a>
+    <a href="/contact">Contact</a>
+
+    <span id="userInfo" class="muted"></span>
+    <button id="loginBtn" type="button">Login</button>
+    <button id="logoutBtn" type="button" style="display:none">Logout</button>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>AI Debate Arena</h1>
+  <div class="subtitle">
+    Professional debate preparation using multi-agent AI
+    <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 24px 0;">
+  </div>
+
+  <form method="post" id="debateForm">
+    <input
+      name="topic"
+      placeholder="Enter debate topic (e.g. Should AI replace human teachers?)"
+      required
+    />
+    <button type="submit">Start Debate</button>
+  </form>
+
+  <div id="thinking" class="thinking">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <span>Agents are debating…</span>
+  </div>
+
+  {% if result %}
+    <h2>Debate Motion</h2>
+    <p>{{ result.clarified_topic }}</p>
+
+    <div class="arena">
+      <div class="card for">
+        <h2>✅ FOR</h2>
+        <div class="argument">
+          <div class="section-title">Opening</div>
+          <p>{{ result.for_opening }}</p>
+        </div>
+        <div class="argument">
+          <div class="section-title">Rebuttal</div>
+          <p>{{ result.for_rebuttal }}</p>
+        </div>
+      </div>
+
+      <div class="card against">
+        <h2>❌ AGAINST</h2>
+        <div class="argument">
+          <div class="section-title">Opening</div>
+          <p>{{ result.against_opening }}</p>
+        </div>
+        <div class="argument">
+          <div class="section-title">Rebuttal</div>
+          <p>{{ result.against_rebuttal }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card summary">
+      <h2>Neutral Summary</h2>
+      <p>{{ result.final_summary }}</p>
+    </div>
+  {% endif %}
+</div>
+
+<!-- ✅ ONE SINGLE SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // 🔐 Firebase init (SAFE)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAbOyLmzRSq4mkfAPpC1GZUCE9IYC4rE9Y",
+    authDomain: "ai-debate-arena-sj.firebaseapp.com",
+    projectId: "ai-debate-arena-sj",
+    appId: "1:691661161018:web:b3f6875cfc75e86710ab03"
+  };
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
+  const auth = firebase.auth();
+
+  // 🔘 DOM elements
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const userInfo = document.getElementById("userInfo");
+  const historyLink = document.getElementById("historyLink");
+  const debateForm = document.getElementById("debateForm");
+
+  // 🟢 LOGIN
+  if (loginBtn) {
+    loginBtn.addEventListener("click", async () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      await auth.signInWithPopup(provider);
+    });
+  }
+
+  // 🔴 LOGOUT
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await fetch("/logout", { method: "POST" });
+      await auth.signOut();
+      window.location.href = "/";
+    });
+  }
+
+  // 🧠 AUTH STATE → UI ONLY
+  auth.onAuthStateChanged((user) => {
+    if (!user) {
+      loginBtn.style.display = "inline-block";
+      logoutBtn.style.display = "none";
+      historyLink.style.display = "none";
+      userInfo.textContent = "";
+      return;
+    }
+
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+    historyLink.style.display = "inline-block";
+    userInfo.textContent = user.displayName || "User";
+  });
+
+  // 🔄 TOKEN REFRESH → BACKEND COOKIE SYNC
+  auth.onIdTokenChanged(async (user) => {
+    if (!user) return;
+
+    const token = await user.getIdToken();
+
+    await fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ auth_token: token })
+    });
+  });
+
+  // 🧪 FORM GUARD
+// 🧪 FORM GUARD + THINKING ANIMATION
+if (debateForm) {
+  debateForm.addEventListener("submit", (e) => {
+    if (!auth.currentUser) {
+      e.preventDefault();
+      alert("Please login to start a debate");
+      loginBtn.click();
+      return;
+    }
+
+    // ✅ User is logged in → show animation
+    const thinking = document.getElementById("thinking");
+    if (thinking) {
+      thinking.classList.add("active");
+    }
+  });
+}
+  window.addEventListener("pageshow", () => {
+    const thinking = document.getElementById("thinking");
+    if (thinking) {
+      thinking.classList.remove("active");
+    }
+  });
+
+});
+</script>
+
+
+
+
+</body>
+</html>

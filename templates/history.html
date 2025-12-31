@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+Debate History
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Your Debate History</h1>
+  <p class="subtitle">All your past debates, saved automatically</p>
+
+  {% if debates %}
+    <div class="history-list">
+      {% for d in debates %}
+        <div class="card">
+          <h3>{{ d.topic }}</h3>
+          <p class="muted">
+            {{ d.created_at.strftime("%b %d, %Y") }}
+          </p>
+          <a href="/debate/{{ d._id }}" class="view-link">
+            View Debate →
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No debates yet. Start one!</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,303 @@
+:root {
+  --bg: #0f0e17;
+  --card: #16161e;
+  --border: rgba(255,255,255,0.08);
+  --text: #f9fafb;
+  --muted: #9ca3af;
+
+  --accent: #f59e0b;    /* amber */
+  --for: #10b981;       /* emerald */
+  --against: #f43f5e;   /* rose */
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Inter", system-ui;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #1f1b2e, var(--bg));
+  color: var(--text);
+}
+
+.container {
+  max-width: 1050px;
+  margin: auto;
+  padding: 50px 24px;
+  animation: fadeIn 0.8s ease;
+}
+
+h1 {
+  font-size: 2.6rem;
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-bottom: 36px;
+}
+
+form {
+  margin-bottom: 36px;
+}
+
+input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #0b0a12;
+  color: var(--text);
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+button {
+  padding: 12px 22px;
+  background: linear-gradient(90deg, var(--accent), #fbbf24);
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #1a1200;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(245,158,11,0.25);
+}
+
+/* Debate Arena */
+
+.arena {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.card {
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.02)
+  );
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  backdrop-filter: blur(14px);
+  animation: slideUp 0.6s ease;
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+}
+
+.for h2 {
+  color: var(--for);
+}
+
+.against h2 {
+  color: var(--against);
+}
+
+/* Argument blocks */
+
+.argument {
+  margin-bottom: 18px;
+  padding-left: 14px;
+  border-left: 3px solid rgba(255,255,255,0.12);
+  animation: fadeIn 0.5s ease;
+}
+
+.for .argument {
+  border-color: var(--for);
+}
+
+.against .argument {
+  border-color: var(--against);
+}
+
+.section-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+p {
+  line-height: 1.7;
+  white-space: pre-line;
+  margin: 0;
+}
+
+/* Summary */
+
+.summary {
+  margin-top: 36px;
+}
+
+.summary h2 {
+  color: var(--accent);
+}
+
+/* Animations */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(15,14,23,0.6);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+.tag {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.thinking {
+  display: none;
+  margin-top: 24px;
+  text-align: center;
+
+  /* 🔑 IMPORTANT */
+  pointer-events: none;
+  z-index: 1;
+}
+
+.thinking.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+
+.dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: blink 1.4s infinite both;
+}
+
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+  0% { opacity: 0.2; }
+  20% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+
+.navbar a {
+  color: var(--text);
+  text-decoration: none;
+  margin-right: 18px;
+  font-size: 0.9rem;
+}
+
+.navbar a:hover {
+  color: var(--accent);
+}
+/* =========================
+   GLOBAL TEXT NORMALIZATION
+   ========================= */
+
+body {
+  font-size: 16px; /* base reset */
+  line-height: 1.6;
+}
+
+/* =========================
+   DEBATE DETAIL PAGE
+   ========================= */
+
+.debate-page h1 {
+  font-size: 2rem;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+
+.debate-page .subtitle {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-bottom: 32px;
+}
+
+.debate-page h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+/* Argument blocks */
+.debate-page .argument p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* Summary card */
+.debate-page .summary p {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.card {
+  padding: 18px 20px;
+}
+
+/* =========================
+   DEBATE DETAIL HEADER
+   ========================= */
+
+.debate-header {
+  margin-bottom: 36px;
+  max-width: 900px;
+}
+
+.debate-title {
+  font-size: 1.9rem;
+  line-height: 1.35;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.debate-meta {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}

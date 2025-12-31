@@ -1,0 +1,20 @@
+.env
+ai-debate-arena-sj-firebase-adminsdk-fbsvc-0ba3debe2e.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+venv/
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Firebase / secrets
+*.key
+
+demo/
