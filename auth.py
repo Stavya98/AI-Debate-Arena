@@ -20,7 +20,7 @@ if not firebase_admin._apps:
 #from here its common
 
 
-firebase_admin.initialize_app(cred)
+#firebase_admin.initialize_app(cred)
 
 def verify_user(token:str):
     decoded = auth.verify_id_token(token)
